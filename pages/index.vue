@@ -16,18 +16,24 @@
     </GmapMap>
 </template>
 <script>
-    import feed from '../plugins/earthquakes.json';
-
     export default {
+        mounted() {
+            fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+                .then((response) => response.json().then((data) => this.feed = data))
+                .catch((err) => {
+                    alert('Unable to load earthquakes');
+                    console.log(err);
+                });
+        },
         data() {
             return {
-                feed,
+                feed: null,
                 selected: null
             };
         },
         computed: {
             earthquakes() {
-                return this.feed.hasOwnProperty('features') ? this.feed.features : [];
+                return this.feed && this.feed.hasOwnProperty('features') ? this.feed.features : [];
             },
             markers() {
                 return this.earthquakes.map(({properties, geometry}) => {
