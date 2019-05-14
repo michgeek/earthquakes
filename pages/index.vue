@@ -8,7 +8,7 @@
             <h1>{{ selected.title }}</h1>
             <ul>
                 <li>Place: {{ selected.place }}</li>
-                <li>Time: {{ selected.time }} TZ: {{ selected.tz }}</li>
+                <li>Date: {{ selected.date }}</li>
                 <li>Magnitude: {{ 1.4 }}</li>
                 <li><a :href="selected.url">More details...</a></li>
             </ul>
@@ -33,6 +33,7 @@
                 return this.earthquakes.map(({properties, geometry}) => {
                     return {
                         ...properties,
+                        date: new Date(properties.time).toUTCString(),
                         position: {
                             lng: geometry.coordinates[0],
                             lat: geometry.coordinates[1],
