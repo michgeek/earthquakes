@@ -1,7 +1,8 @@
 <template>
     <GmapMap :center="{lat:10, lng:10}" :zoom="2" map-type-id="terrain" style="width: 100vw; height: 100vh">
         <GmapMarker :key="index" v-for="(m, index) in markers" :position="m.position" v-on:click="selectMarker(m)"/>
-        <gmap-info-window :options="markerInfoOptions"
+        <gmap-info-window v-if="shouldShowMarkerInfo"
+                          :options="markerInfoOptions"
                           :position="selected.position"
                           :opened="shouldShowMarkerInfo" v-on:closeclick="unselectMarker">
             <h1>{{ selected.title }}</h1>
